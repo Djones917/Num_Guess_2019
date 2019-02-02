@@ -20,45 +20,55 @@ maxNum.textContent = max;
 
 // Listen for guess btn
 // Note: black text means it is a string!!! so create a variable guess and use parseInt to change it to a number!
-guessBtn.addEventListener('click', function(){
+guessBtn.addEventListener('click', function () {
     let guess = parseInt(guessInput.value);
-    // console.log(guess) this would come back NaN or not a number!
 
     // Validate
-    if(isNaN(guess) || guess < min || guess > max) {
+    if (isNaN(guess) || guess < min || guess > max) {
         setMessage(`Please enter a number between ${min} and ${max}`, 'red');
     }
 
     // Check if won
-    if(guess === winningNum) {
+    if (guess === winningNum) {
         // Game over - won
-        // Disable input
-       guessInput.disabled = true;
-       // Change border color
-       guessInput.style.borderColor = 'green';
-       // Set message
-       setMessage(`${winningNum} is correct, YOU WIN!`, 'green');
-    } else {
-       // Wrong number
-       guessesLeft -= 1;
-       if(guessesLeft === 0) {
-           // Game over - lost
-           // Disable input
-           guessInput.disabled = true;
-           // Change border color
-           guessInput.style.borderColor = 'red';
-           // Set message
-           setMessage(`Game over, you lost and the correct number is ${winningNum}`, 'red');
-       } else {
-           // Game continues - anwser wrong
-           // Clear input
-           guessInput.value = '';
-           // Tell user the answer is wrong and how many guess left
-           setMessage(`${guess} is not correct, ${guessesLeft} guesses left!`, 'red');
-       }
-    }
+        gameOver(true, `${winningNum} is correct, YOU WIN!`);
 
+    } else {
+        // Wrong number
+        guessesLeft -= 1;
+
+        if (guessesLeft === 0) {
+            // Game over - lost
+            gameOver(false, `Game Over, you lost. The correct number was ${winningNum}`);
+        } else {
+            // Game continues - answer wrong
+
+            // Change border color
+            guessInput.style.borderColor = 'red';
+
+            // Clear Input
+            guessInput.value = '';
+
+            // Tell user its the wrong number
+            setMessage(`${guess} is not correct, ${guessesLeft} guesses left`, 'red');
+        }
+    }
 });
+
+// Game over
+function gameOver(won, msg) {
+    let color;
+    won === true ? color = 'green' : color = 'red';
+
+    // Disable input
+    guessInput.disabled = true;
+    // Change border color
+    guessInput.style.borderColor = color;
+    // Set text color
+    message.style.color = color;
+    // Set message
+    setMessage(msg);
+}
 
 
 // Set message
