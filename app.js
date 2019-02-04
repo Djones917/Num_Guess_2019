@@ -2,7 +2,7 @@
 // Game values
 let min = 1,
     max = 10,
-    winningNum = 2,
+    winningNum = getWinningNum(),
     guessesLeft = 3;
 
 
@@ -17,6 +17,14 @@ const game = document.querySelector('#game'),
 // Assign UI min and max
 minNum.textContent = min;
 maxNum.textContent = max;
+
+// Play Again Event Listener event delegation watch an example using click but use mousedown
+game.addEventListener('mousedown', function(e){
+   if(e.target.className === 'play-again') {
+      window.location.reload();
+   }
+});
+
 
 // Listen for guess btn
 // Note: black text means it is a string!!! so create a variable guess and use parseInt to change it to a number!
@@ -71,6 +79,12 @@ function gameOver(won, msg) {
 
     // Play again ?
     guessBtn.value = 'Play Again';
+    guessBtn.className += 'play-again';
+}
+
+// Get winning num
+getWinningNum() {
+  
 }
 
 
