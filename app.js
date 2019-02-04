@@ -2,7 +2,7 @@
 // Game values
 let min = 1,
     max = 10,
-    winningNum = getWinningNum(),
+    winningNum = getRandomNum(min, max),
     guessesLeft = 3;
 
 
@@ -22,6 +22,8 @@ maxNum.textContent = max;
 game.addEventListener('mousedown', function(e){
    if(e.target.className === 'play-again') {
       window.location.reload();
+       // Clear Input - final tutorial brad did not put this in so I added it!
+       guessInput.value = '';
    }
 });
 
@@ -83,8 +85,8 @@ function gameOver(won, msg) {
 }
 
 // Get winning num
-getWinningNum() {
-  
+function getRandomNum(min, max) {
+   return Math.floor(Math.random()*(max-min+1)+min);
 }
 
 
